@@ -1,10 +1,10 @@
-//from: http://jacksondunstan.com/articles/3241
+﻿//from: http://jacksondunstan.com/articles/3241
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
+ 
 using UnityEngine;
-
+ 
 /// <summary>
 /// Imposes a limit on the maximum number of coroutines that can be running at any given time. Runs
 /// coroutines until the limit is reached and then begins queueing coroutines instead. When
@@ -17,22 +17,22 @@ public class CoroutineQueue
 	/// Maximum number of coroutines to run at once
 	/// </summary>
 	private readonly uint maxActive;
-
+ 
 	/// <summary>
 	/// Delegate to start coroutines with
 	/// </summary>
-	private readonly Func<IEnumerator, Coroutine> coroutineStarter;
-
+	private readonly Func<IEnumerator,Coroutine> coroutineStarter;
+ 
 	/// <summary>
 	/// Queue of coroutines waiting to start
 	/// </summary>
 	private readonly Queue<IEnumerator> queue;
-
+ 
 	/// <summary>
 	/// Number of currently active coroutines
 	/// </summary>
 	public uint numActive;
-
+ 
 	/// <summary>
 	/// Create the queue, initially with no coroutines
 	/// </summary>
@@ -46,7 +46,7 @@ public class CoroutineQueue
 	/// <exception cref="ArgumentException">
 	/// If maxActive is zero.
 	/// </exception>
-	public CoroutineQueue(uint maxActive, Func<IEnumerator, Coroutine> coroutineStarter)
+	public CoroutineQueue(uint maxActive, Func<IEnumerator,Coroutine> coroutineStarter)
 	{
 		if (maxActive == 0)
 		{
@@ -56,7 +56,7 @@ public class CoroutineQueue
 		this.coroutineStarter = coroutineStarter;
 		queue = new Queue<IEnumerator>();
 	}
-
+ 
 	/// <summary>
 	/// If the number of active coroutines is under the limit specified in the constructor, run the
 	/// given coroutine. Otherwise, queue it to be run when other coroutines finish.
@@ -74,7 +74,7 @@ public class CoroutineQueue
 			queue.Enqueue(coroutine);
 		}
 	}
-
+ 
 	/// <summary>
 	/// Runs a coroutine then runs the next queued coroutine (via <see cref="Run"/>) if available.
 	/// Increments <see cref="numActive"/> before running the coroutine and decrements it after.

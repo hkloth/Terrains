@@ -1,4 +1,4 @@
-// -------------------------------------
+ï»¿// -------------------------------------
 //  Domain		: IBT / Realtime.co
 //  Author		: Nicholas Ventimiglia
 //  Product		: Messaging and Storage
@@ -29,7 +29,7 @@ namespace Realtime.Messaging.Internal
     [Serializable]
     [ComVisible(false)]
     [DebuggerDisplay("Count = {Count}")]
-    //    [HostProtection(Synchronization = true, ExternalThreading = true)]
+//    [HostProtection(Synchronization = true, ExternalThreading = true)]
     public class ConcurrentDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IDictionary
     {
         [NonSerialized]
@@ -217,7 +217,7 @@ namespace Realtime.Messaging.Internal
             }
 
             m_locks = new object[concurrencyLevel];
-            for (int i = 0; i < m_locks.Length; i++)
+            for (int i = 0;i < m_locks.Length;i++)
             {
                 m_locks[i] = new object();
             }
@@ -318,7 +318,7 @@ namespace Realtime.Messaging.Internal
                     }
 
                     Node prev = null;
-                    for (Node curr = m_buckets[bucketNo]; curr != null; curr = curr.m_next)
+                    for (Node curr = m_buckets[bucketNo];curr != null;curr = curr.m_next)
                     {
                         Assert((prev == null && curr == m_buckets[bucketNo]) || prev.m_next == curr);
 
@@ -383,7 +383,7 @@ namespace Realtime.Messaging.Internal
             // We can get away w/out a lock here.
             Node n = buckets[bucketNo];
 
-            // The memory barrier ensures that the load of the fields of 'n' doesn’t move before the load from buckets[i]. 
+            // The memory barrier ensures that the load of the fields of 'n' doesnâ€™t move before the load from buckets[i]. 
             Thread.MemoryBarrier();
             while (n != null)
             {
@@ -400,7 +400,7 @@ namespace Realtime.Messaging.Internal
         }
 
         /// <summary>
-        /// Compares the existing value for the specified key with a specified value, and if they’re equal,
+        /// Compares the existing value for the specified key with a specified value, and if theyâ€™re equal,
         /// updates the key with a third value. 
         /// </summary>
         /// <param name="key">The key whose value is compared with <paramref name="comparisonValue"/> and 
@@ -441,7 +441,7 @@ namespace Realtime.Messaging.Internal
 
                     // Try to find this key in the bucket
                     Node prev = null;
-                    for (Node node = buckets[bucketNo]; node != null; node = node.m_next)
+                    for (Node node = buckets[bucketNo];node != null;node = node.m_next)
                     {
                         Assert((prev == null && node == m_buckets[bucketNo]) || prev.m_next == node);
                         if (m_comparer.Equals(node.m_key, key))
@@ -531,7 +531,7 @@ namespace Realtime.Messaging.Internal
 
                 int count = 0;
 
-                for (int i = 0; i < m_locks.Length; i++)
+                for (int i = 0;i < m_locks.Length;i++)
                 {
                     count += m_countPerLock[i];
                 }
@@ -564,7 +564,7 @@ namespace Realtime.Messaging.Internal
                 int count = 0;
                 checked
                 {
-                    for (int i = 0; i < m_locks.Length; i++)
+                    for (int i = 0;i < m_locks.Length;i++)
                     {
                         count += m_countPerLock[i];
                     }
@@ -589,9 +589,9 @@ namespace Realtime.Messaging.Internal
         private void CopyToPairs(KeyValuePair<TKey, TValue>[] array, int index)
         {
             Node[] buckets = m_buckets;
-            for (int i = 0; i < buckets.Length; i++)
+            for (int i = 0;i < buckets.Length;i++)
             {
-                for (Node current = buckets[i]; current != null; current = current.m_next)
+                for (Node current = buckets[i];current != null;current = current.m_next)
                 {
                     array[index] = new KeyValuePair<TKey, TValue>(current.m_key, current.m_value);
                     index++; //this should never flow, CopyToPairs is only called when there's no overflow risk
@@ -607,9 +607,9 @@ namespace Realtime.Messaging.Internal
         private void CopyToEntries(DictionaryEntry[] array, int index)
         {
             Node[] buckets = m_buckets;
-            for (int i = 0; i < buckets.Length; i++)
+            for (int i = 0;i < buckets.Length;i++)
             {
-                for (Node current = buckets[i]; current != null; current = current.m_next)
+                for (Node current = buckets[i];current != null;current = current.m_next)
                 {
                     array[index] = new DictionaryEntry(current.m_key, current.m_value);
                     index++;  //this should never flow, CopyToEntries is only called when there's no overflow risk
@@ -625,9 +625,9 @@ namespace Realtime.Messaging.Internal
         private void CopyToObjects(object[] array, int index)
         {
             Node[] buckets = m_buckets;
-            for (int i = 0; i < buckets.Length; i++)
+            for (int i = 0;i < buckets.Length;i++)
             {
-                for (Node current = buckets[i]; current != null; current = current.m_next)
+                for (Node current = buckets[i];current != null;current = current.m_next)
                 {
                     array[index] = new KeyValuePair<TKey, TValue>(current.m_key, current.m_value);
                     index++; //this should never flow, CopyToObjects is only called when there's no overflow risk
@@ -648,11 +648,11 @@ namespace Realtime.Messaging.Internal
         {
             Node[] buckets = m_buckets;
 
-            for (int i = 0; i < buckets.Length; i++)
+            for (int i = 0;i < buckets.Length;i++)
             {
                 Node current = buckets[i];
 
-                // The memory barrier ensures that the load of the fields of 'current' doesn’t move before the load from buckets[i]. 
+                // The memory barrier ensures that the load of the fields of 'current' doesnâ€™t move before the load from buckets[i]. 
                 Thread.MemoryBarrier();
                 while (current != null)
                 {
@@ -697,7 +697,7 @@ namespace Realtime.Messaging.Internal
 
                     // Try to find this key in the bucket 
                     Node prev = null;
-                    for (Node node = buckets[bucketNo]; node != null; node = node.m_next)
+                    for (Node node = buckets[bucketNo];node != null;node = node.m_next)
                     {
                         Assert((prev == null && node == m_buckets[bucketNo]) || prev.m_next == node);
                         if (m_comparer.Equals(node.m_key, key))
@@ -825,7 +825,7 @@ namespace Realtime.Messaging.Internal
                     AcquireAllLocks(ref acquiredLocks);
 
                     // Compute the count, we allow overflow 
-                    for (int i = 0; i < m_countPerLock.Length; i++)
+                    for (int i = 0;i < m_countPerLock.Length;i++)
                     {
                         count += m_countPerLock[i];
                     }
@@ -1009,7 +1009,7 @@ namespace Realtime.Messaging.Internal
                     // Acquire all locks 
                     AcquireAllLocks(ref acquiredLocks);
 
-                    for (int i = 0; i < m_countPerLock.Length; i++)
+                    for (int i = 0;i < m_countPerLock.Length;i++)
                     {
                         if (m_countPerLock[i] != 0)
                         {
@@ -1400,7 +1400,7 @@ namespace Realtime.Messaging.Internal
 
                 int count = 0;
 
-                for (int i = 0; i < m_locks.Length; i++)
+                for (int i = 0;i < m_locks.Length;i++)
                 {
                     count += m_countPerLock[i];
                 }
@@ -1530,7 +1530,7 @@ namespace Realtime.Messaging.Internal
                 AcquireLocks(1, m_locks.Length, ref locksAcquired);
 
                 // Copy all data into a new table, creating new nodes for all elements
-                for (int i = 0; i < buckets.Length; i++)
+                for (int i = 0;i < buckets.Length;i++)
                 {
                     Node current = buckets[i];
                     while (current != null)
@@ -1604,7 +1604,7 @@ namespace Realtime.Messaging.Internal
         {
             Assert(fromInclusive <= toExclusive);
 
-            for (int i = fromInclusive; i < toExclusive; i++)
+            for (int i = fromInclusive;i < toExclusive;i++)
             {
                 bool lockTaken = false;
                 try
@@ -1629,7 +1629,7 @@ namespace Realtime.Messaging.Internal
         {
             Assert(fromInclusive <= toExclusive);
 
-            for (int i = fromInclusive; i < toExclusive; i++)
+            for (int i = fromInclusive;i < toExclusive;i++)
             {
                 Monitor.Exit(m_locks[i]);
             }
@@ -1646,7 +1646,7 @@ namespace Realtime.Messaging.Internal
                 AcquireAllLocks(ref locksAcquired);
                 List<TKey> keys = new List<TKey>();
 
-                for (int i = 0; i < m_buckets.Length; i++)
+                for (int i = 0;i < m_buckets.Length;i++)
                 {
                     Node current = m_buckets[i];
                     while (current != null)
@@ -1675,7 +1675,7 @@ namespace Realtime.Messaging.Internal
                 AcquireAllLocks(ref locksAcquired);
                 List<TValue> values = new List<TValue>();
 
-                for (int i = 0; i < m_buckets.Length; i++)
+                for (int i = 0;i < m_buckets.Length;i++)
                 {
                     Node current = m_buckets[i];
                     while (current != null)
@@ -1809,7 +1809,7 @@ namespace Realtime.Messaging.Internal
             m_countPerLock = new int[m_serializationConcurrencyLevel];
 
             m_locks = new object[m_serializationConcurrencyLevel];
-            for (int i = 0; i < m_locks.Length; i++)
+            for (int i = 0;i < m_locks.Length;i++)
             {
                 m_locks[i] = new object();
             }
